@@ -1,0 +1,826 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header Quote */
+.header-quote {
+  background: #eeeeee;
+  text-align: center;
+  padding: 10px 15px;
+  font-style: italic;
+  font-size: 14px;
+  color: #555;
+  border-bottom: 1px solid #ddd;
+  font-family: Georgia, serif;
+  letter-spacing: 0.5px;
+}
+
+/* Navbar */
+.navbar {
+  background: white;
+  padding: 12px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Navbar container */
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+}
+
+/* Logo */
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #e74c3c;
+  text-decoration: none;
+  letter-spacing: 1px;
+  position: relative;
+}
+.logo:hover {
+  color: #e52a16ff;
+}
+
+/* Menu */
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 28px;
+}
+.nav-menu li {
+  position: relative;
+}
+.nav-menu a {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  font-size: 1rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.nav-menu a:hover {
+  color: #e74c3c;
+}
+.nav-menu a.active {
+  color: #e74c3c;
+}
+.nav-menu a::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #e74c3c;
+  transition: width 0.3s ease;
+}
+.nav-menu a:hover::after,
+.nav-menu a.active::after {
+  width: 100%;
+}
+
+/* Hamburger button */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #2c3e50;
+  user-select: none;
+}
+
+/* Hero Section */
+.slideshow-container {
+  position: relative;
+  width: 100vw;
+  height: 30.25vw; /* 16:9 ratio: 9/16 * 100 */
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Will fit perfectly since ratios match */
+  object-fit: cover; /* crops the image instead of squeezing */
+  object-position: top; /* optional: crop from top, center, bottom */
+}
+
+@media (max-width: 768px) {
+  .slideshow-container {
+    height: 40vh;
+  }
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* Explore Section */
+.explore {
+  padding: 80px 0;
+  background: #f8f8f8;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  color: #333;
+}
+
+.age-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 80px;
+}
+
+.age-card {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), #666;
+  height: 200px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.age-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.kids-card {
+  background: url("img/homeKids.png");
+  background-size: cover; /* makes it fill the box */
+  background-position: center; /* keeps it centered */
+  background-repeat: no-repeat;
+}
+
+.teens-card {
+  background: url("img/homeTeens.png");
+  background-size: cover; /* makes it fill the box */
+  background-position: center; /* keeps it centered */
+  background-repeat: no-repeat;
+}
+
+.adults-card {
+  background: url("img/homeAdults.png");
+  background-size: cover; /* makes it fill the box */
+  background-position: center; /* keeps it centered */
+  background-repeat: no-repeat;
+}
+
+.age-card h3 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.age-card p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* About Section */
+.about {
+  padding: clamp(60px, 8vw, 120px) 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  position: relative;
+}
+
+.about::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(
+      circle at 20% 80%,
+      rgba(120, 119, 198, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 107, 107, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(72, 187, 120, 0.06) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+  gap: clamp(20px, 4vw, 40px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.about-card {
+  background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.4) 100%
+    ),
+    #b71c3bff;
+  height: auto;
+  min-height: 280px;
+  border-radius: 20px;
+  padding: clamp(24px, 5vw, 40px);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.about-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.about-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.about-card:hover::before {
+  opacity: 1;
+}
+
+.how-to-card {
+  background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.4) 100%
+    ),
+    linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.how-to-card::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent,
+    rgba(102, 126, 234, 0.3),
+    transparent
+  );
+  animation: rotate 8s linear infinite;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.why-matters-card {
+  background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.4) 100%
+    ),
+    linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.why-matters-card::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    transparent,
+    rgba(245, 87, 108, 0.3),
+    transparent
+  );
+  animation: rotate 10s linear infinite reverse;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.about-card h3 {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 700;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.about-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.about-card li {
+  margin-bottom: 12px;
+  opacity: 0.95;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  line-height: 1.6;
+  position: relative;
+  padding-left: 20px;
+  transition: all 0.2s ease;
+}
+
+.about-card li::before {
+  content: "▶";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75em;
+  transition: all 0.2s ease;
+}
+
+.about-card li:hover {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.about-card li:hover::before {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Enhanced responsiveness */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .about-card {
+    min-height: 240px;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 40px 0;
+  }
+
+  .about-card {
+    min-height: 200px;
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .about-card h3 {
+    margin-bottom: 16px;
+  }
+
+  .about-card li {
+    margin-bottom: 10px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .about-card,
+  .about-card li,
+  .about-card::before {
+    transition: none;
+  }
+
+  .about-card::after {
+    animation: none;
+  }
+
+  .about-card:hover {
+    transform: none;
+  }
+}
+
+/* Footer */
+footer {
+  background: #f8f8f8;
+  color: black;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.copyright {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.bible-verse {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    position: absolute;
+    top: 60px; /* height of navbar */
+    right: 20px;
+    background: white;
+    padding: 15px 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    animation: fadeInMenu 0.3s ease;
+  }
+
+  /* This is what makes the menu appear */
+  .nav-menu.show {
+    display: flex;
+  }
+  /* Initially hide menu on mobile */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    position: absolute;
+    top: 60px; /* Adjust depending on navbar height */
+    right: 20px;
+    background-color: white; /* Or your preferred color */
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Show menu when active */
+  .nav-links.active {
+    display: flex;
+  }
+
+  /* Animation */
+  @keyframes fadeInMenu {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-arrow {
+    display: none;
+  }
+
+  .age-groups {
+    grid-template-columns: 1fr;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-card {
+    min-height: auto;
+  }
+}
+
+/* Kid Page */
+.kids {
+  background: url("img/kids.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  color: white;
+  position: relative;
+  width: 100vw;
+  height: 40.25vw; /* 16:9 ratio: 9/16 * 100 */
+  max-height: 100vh;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.teens {
+  background: url("img/teens.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  color: white;
+  position: relative;
+  width: 100vw;
+  height: 40.25vw; /* 16:9 ratio: 9/16 * 100 */
+  max-height: 100vh;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.adults {
+  background: url("img/adults.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  color: white;
+  position: relative;
+  width: 100vw;
+  height: 40.25vw; /* 16:9 ratio: 9/16 * 100 */
+  max-height: 100vh;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Loading animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Main Content */
+.main-content {
+  background: #f0f0f0;
+  min-height: 60vh;
+  padding: 80px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.gospel-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
+  justify-items: center;
+}
+
+.gospel-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  max-width: 350px;
+}
+
+.gospel-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-image {
+  height: 250px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.card-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.card-text h3 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  line-height: 1.1;
+}
+
+/* Jesus Love Me Card */
+.love-card .card-image {
+  background: url("img/kids-prodigal.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.love-card .card-image::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3); /* overlay color */
+}
+
+/* Jesus Rescue Me Card */
+.rescue-card .card-image {
+  background: url("img/kids-sheep.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.rescue-card .card-image::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3); /* overlay color */
+}
+
+/* Teen Roman Road */
+.teen-romanroad-card .card-image {
+  background: url("img/teens-assurance.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.teen-romanroad-card .card-image::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3); /* overlay color */
+}
+
+/* Teen 3 Circles */
+.teen-3circles-card .card-image {
+  background: url("img/teens-romanroad.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.teen-3circles-card .card-image::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3); /* overlay color */
+}
+
+/* Teen Roman Road */
+.teen-bridgegap-card .card-image {
+  background: url("img/teen-bridge-gap.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.teen-bridgegap-card .card-image::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3); /* overlay color */
+}
+
+/* Hero Section */
+
+.hero h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  letter-spacing: 3px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+  color: white;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  max-width: 600px;
+  opacity: 0.95;
+}
