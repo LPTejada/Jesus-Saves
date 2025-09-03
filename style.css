@@ -791,7 +791,7 @@ html {
 
 /* Teen Roman Road */
 .teen-bridgegap-card .card-image {
-  background: url("img/teen-bridge-gap.png");
+  background: url("img/life.jpg");
   background-size: cover;
   background-position: center;
   position: relative;
@@ -804,9 +804,24 @@ html {
   height: 100%;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.3); /* overlay color */
 }
 
+/* Teen Roman Road */
+.teen-bridge-card .card-image {
+  background: url("img/road.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.teen-bridge-card .card-image::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
 /* Hero Section */
 
 .hero h1 {
