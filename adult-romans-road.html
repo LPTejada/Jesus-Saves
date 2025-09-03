@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Romans Road — Scroll Narrative</title>
+
+<style>
+  /* ===== COLOR VARIABLES ===== */
+  :root {
+    --dark-blue: #0f1720;
+    --darker-blue: #0b1220;
+    --light-gray: #94a3b8;
+    --yellow: #ffd166;
+    --max-width: 1100px;
+  }
+
+  /* ===== BASIC PAGE SETUP ===== */
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Inter, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(180deg, #071124 0%, #0f1720 100%);
+    color: #e6eef6;
+    overflow-x: hidden;
+  }
+
+  .site {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    position: relative;
+    width: 100%;
+  }
+
+  /* ===== MAIN SECTIONS ===== */
+  section.step {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ===== BACKGROUND DECORATIONS ===== */
+  .background-decoration {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.1;
+    z-index: -1;
+  }
+
+  #intro .background-decoration {
+    width: 400px;
+    height: 400px;
+    right: -100px;
+    top: -100px;
+    background: linear-gradient(135deg, #1f2937, #0f1720);
+  }
+
+  #step1 .background-decoration {
+    width: 350px;
+    height: 350px;
+    left: -80px;
+    top: -80px;
+    background: linear-gradient(135deg, #ffd166, #fca311);
+  }
+
+  #step2 .background-decoration {
+    width: 350px;
+    height: 350px;
+    right: -80px;
+    top: -80px;
+    background: linear-gradient(135deg, #ef476f, #ff7b7b);
+  }
+
+  #step3 .background-decoration {
+    width: 350px;
+    height: 350px;
+    left: -80px;
+    bottom: -80px;
+    background: linear-gradient(135deg, #06d6a0, #4cc9f0);
+  }
+
+  /* ===== CONTENT CARD ===== */
+  .content-card {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    text-align: center;
+  }
+
+  /* ===== TEXT STYLES ===== */
+  .section-label {
+    font-weight: bold;
+    color: var(--yellow);
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+
+  .main-title {
+    margin: 8px 0 16px 0;
+    font-size: 2rem;
+    line-height: 1.1;
+    color: white;
+    font-weight: bold;
+  }
+
+  .description {
+    color: #dbe8ff;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .bible-verse {
+    display: block;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px auto;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    max-width: 600px;
+    text-align: left;
+  }
+
+  .explanation {
+    color: #f1f5f9;
+    font-size: 1.1rem;
+    margin-top: 16px;
+    line-height: 1.7;
+    font-weight: 500;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ===== PROGRESS DOTS ===== */
+  .progress-dots {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 100;
+  }
+
+  .progress-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .progress-dot.current {
+    transform: scale(1.5);
+    background: var(--yellow);
+    box-shadow: 0 4px 12px rgba(255, 209, 102, 0.3);
+  }
+
+  /* ===== CLOSE BUTTON ===== */
+  .close-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    padding: 6px 14px;
+    z-index: 200;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+
+  /* ===== ANIMATIONS ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .typing {
+    border-right: 2px solid rgba(255, 255, 255, 0.3);
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    50% { border-color: transparent; }
+  }
+
+  /* ===== MOBILE RESPONSIVE STYLES ===== */
+  
+  /* Large tablets and small desktops */
+  @media (max-width: 1024px) {
+    section.step {
+      padding: 16px;
+    }
+    
+    .content-card {
+      max-width: 90%;
+      padding: 28px;
+    }
+    
+    .main-title {
+      font-size: 1.8rem;
+    }
+    
+    .progress-dots {
+      right: 16px;
+    }
+  }
+
+  /* Tablets */
+  @media (max-width: 768px) {
+    section.step {
+      min-height: 80vh; /* Reduced gap between sections */
+      padding: 12px;
+    }
+    
+    .content-card {
+      padding: 20px;
+      margin: 8px;
+      max-width: 95%;
+      border-radius: 10px;
+    }
+    
+    .main-title {
+      font-size: 1.6rem;
+      line-height: 1.2;
+    }
+    
+    .description {
+      font-size: 0.95rem;
+    }
+    
+    .explanation {
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 100%;
+    }
+    
+    .bible-verse {
+      font-size: 0.9rem;
+      padding: 14px;
+      margin: 12px auto;
+      max-width: 100%;
+    }
+    
+    .section-label {
+      font-size: 0.8rem;
+    }
+    
+    .close-btn {
+      top: 16px;
+      left: 16px;
+      font-size: 28px;
+      padding: 4px 12px;
+    }
+    
+    .background-decoration {
+      width: 250px !important;
+      height: 250px !important;
+    }
+  }
+
+  /* Mobile phones */
+  @media (max-width: 480px) {
+    section.step {
+      padding: 8px;
+      min-height: 70vh; /* Even smaller gaps on mobile */
+    }
+    
+    .content-card {
+      padding: 18px;
+      margin: 6px;
+      max-width: 96%;
+      border-radius: 8px;
+    }
+    
+    .main-title {
+      font-size: 1.4rem;
+      line-height: 1.3;
+      margin: 6px 0 12px 0;
+    }
+    
+    .description {
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+    
+    .explanation {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+    
+    .bible-verse {
+      font-size: 0.85rem;
+      padding: 12px;
+      margin: 10px auto;
+      line-height: 1.3;
+    }
+    
+    .section-label {
+      font-size: 0.75rem;
+      margin-bottom: 6px;
+    }
+    
+    .close-btn {
+      top: 12px;
+      left: 12px;
+      font-size: 24px;
+      padding: 3px 10px;
+    }
+    
+    .progress-dots {
+      right: 10px;
+      gap: 10px;
+    }
+    
+    .progress-dot {
+      width: 10px;
+      height: 10px;
+    }
+    
+    .progress-dot.current {
+      transform: scale(1.3);
+    }
+    
+    .background-decoration {
+      width: 200px !important;
+      height: 200px !important;
+      filter: blur(30px);
+    }
+  }
+
+  /* Small phones */
+  @media (max-width: 360px) {
+    section.step {
+      padding: 6px;
+      min-height: 65vh; /* Minimal gaps */
+    }
+    
+    .content-card {
+      margin: 4px;
+      padding: 16px;
+      max-width: 97%;
+    }
+    
+    .main-title {
+      font-size: 1.3rem;
+      line-height: 1.3;
+    }
+    
+    .description {
+      font-size: 0.85rem;
+    }
+    
+    .explanation {
+      font-size: 0.9rem;
+    }
+    
+    .bible-verse {
+      font-size: 0.8rem;
+      padding: 10px;
+      margin: 8px auto;
+    }
+    
+    .section-label {
+      font-size: 0.7rem;
+    }
+    
+    .close-btn {
+      top: 8px;
+      left: 8px;
+      font-size: 20px;
+      padding: 2px 8px;
+    }
+    
+    .progress-dots {
+      display: none;
+    }
+    
+    .background-decoration {
+      width: 150px !important;
+      height: 150px !important;
+      filter: blur(25px);
+    }
+  }
+
+  /* Very small phones */
+  @media (max-width: 320px) {
+    section.step {
+      min-height: 60vh; /* Ultra-compact */
+    }
+    
+    .content-card {
+      padding: 14px;
+      margin: 2px;
+    }
+    
+    .main-title {
+      font-size: 1.2rem;
+    }
+    
+    .bible-verse {
+      font-size: 0.75rem;
+      padding: 8px;
+    }
+    
+    .explanation {
+      font-size: 0.85rem;
+    }
+    
+    .description {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* Landscape orientation */
+  @media (max-height: 500px) and (orientation: landscape) {
+    section.step {
+      min-height: 90vh;
+      padding: 8px;
+    }
+    
+    .content-card {
+      padding: 16px;
+      margin: 4px auto;
+    }
+    
+    .main-title {
+      font-size: 1.3rem;
+      margin: 4px 0 8px 0;
+    }
+    
+    .bible-verse {
+      margin: 8px auto;
+      padding: 10px;
+    }
+    
+    .explanation {
+      margin-top: 8px;
+    }
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in,
+    .progress-dot,
+    .close-btn {
+      transition: none;
+    }
+    
+    .typing {
+      animation: none;
+      border-right: none;
+    }
+  }
+</style>
+</head>
+
+<body>
+  <a href="adults.html" class="close-btn">&times;</a>
+
+  <div class="site">
+
+<!-- INTRODUCTION SECTION -->
+<section id="intro" class="step">
+  <div class="background-decoration"></div>
+  <div class="content-card fade-in" data-animate>
+    <div class="section-label">Romans Road</div>
+    <h1 class="main-title">Death is an event we cannot avoid. Every person, no matter how good or strong, will one day face death.</h1>
+    <p class="description">
+     The Bible shows us the reason behind this reality and the hope God provides.
+    </p>
+  </div>
+</section>
+
+<!-- STEP 1: WE ARE ALL SINNERS -->
+<section id="step1" class="step">
+  <div class="background-decoration"></div>
+  <div class="content-card fade-in" data-animate>
+    <div class="section-label">I. WE ARE ALL SINNERS</div>
+    <h1 class="main-title">We are all guilty before God</h1>
+    <p class="explanation">
+      The Bible wants us to know that we are all sinners. None of us is perfect, and all of us have disobeyed God in one way or another. Because of our sin, we fall short of God's holy standard and cannot reach Him on our own.
+    </p>
+    <div class="bible-verse" data-typewrite>
+      Romans 3:10 — <span class="verse-text">"As it is written, There is none righteous, no, not one."</span>
+    </div>
+    <div class="bible-verse" data-typewrite>
+      Romans 3:23 — <span class="verse-text">"For all have sinned, and come short of the glory of God."</span>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 2: JESUS DIED FOR OUR SINS -->
+<section id="step2" class="step">
+  <div class="background-decoration"></div>
+  <div class="content-card fade-in" data-animate>
+    <div class="section-label">II. JESUS DIED FOR OUR SINS</div>
+    <h1 class="main-title">Jesus took our place</h1>
+    <p class="explanation">
+      Even though we are sinners, God showed His great love by sending His Son, Jesus Christ, to die in our place. Jesus took the punishment that we deserve so that we can be forgived and have eternal life. His sacrifice makes it possible for us to escape eternal death and instead receive the gift of life with Him.
+    </p>
+    <div class="bible-verse" data-typewrite>
+      Romans 5:8 — <span class="verse-text">"But God commendeth his love toward us, in that, while we were yet sinners, Christ died for us."</span>
+    </div>
+    <div class="bible-verse" data-typewrite>
+      Romans 6:23 — <span class="verse-text">"For the wages of sin is death, but the gift of God is eternal life through Jesus Christ our Lord."</span>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 3: CONFESS AND ACCEPT JESUS -->
+<section id="step3" class="step">
+  <div class="background-decoration"></div>
+  <div class="content-card fade-in" data-animate>
+    <div class="section-label">III. CONFESS & ACCEPT JESUS</div>
+    <h1 class="main-title">Salvation is a personal choice</h1>
+    <p class="explanation">
+      God's gift of salvation is offered freely, but we must choose to receive it. The Bible tells us that we need to confess our sins, believe that Jesus rose from the dead, and call on His name. When we do, He promises to save us and give us eternal life.
+    </p>
+    <div class="bible-verse" data-typewrite>
+      Romans 10:9 — <span class="verse-text">"That if thou shalt confess with thy mouth the Lord Jesus, and believe in thine heart that God hath raised him from the dead, thou shalt be saved."</span>
+    </div>
+    <div class="bible-verse" data-typewrite>
+      Romans 10:13 — <span class="verse-text">"For whosoever shall call upon the name of the Lord shall be saved."</span>
+    </div>
+  </div>
+</section>
+
+  </div>
+
+  <!-- PROGRESS DOTS ON THE RIGHT SIDE -->
+  <div class="progress-dots">
+    <div class="progress-dot" data-section="intro" title="Introduction"></div>
+    <div class="progress-dot" data-section="step1" title="Step 1"></div>
+    <div class="progress-dot" data-section="step2" title="Step 2"></div>
+    <div class="progress-dot" data-section="step3" title="Step 3"></div>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  const sections = document.querySelectorAll('section.step');
+  const progressDots = document.querySelectorAll('.progress-dot');
+  
+  let currentSectionIndex = 0;
+  let typewriterActive = false; // Prevent multiple typewriter instances
+
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const card = entry.target.querySelector('[data-animate]');
+        if (card) {
+          card.classList.add('visible');
+        }
+        
+        updateCurrentSection(entry.target.id);
+        
+        // Start typewriter for this section only
+        const typewriters = entry.target.querySelectorAll('[data-typewrite]');
+        typewriters.forEach((typewriter, index) => {
+          if (!typewriter.classList.contains('typed')) {
+            setTimeout(function() {
+              startTypewriter(typewriter);
+            }, index * 1200); // Stagger the verses
+          }
+        });
+      }
+    });
+  }, {
+    threshold: 0.3
+  });
+
+  sections.forEach(function(section) {
+    observer.observe(section);
+  });
+
+  function startTypewriter(element) {
+    if (typewriterActive) return; // Prevent overlapping
+    
+    const textSpan = element.querySelector('.verse-text');
+    if (!textSpan || element.classList.contains('typed')) return;
+    
+    typewriterActive = true;
+    
+    // Store the original text and clear it
+    const fullText = textSpan.getAttribute('data-original-text') || textSpan.textContent;
+    textSpan.setAttribute('data-original-text', fullText); // Save original
+    textSpan.textContent = '';
+    element.classList.add('typing');
+    
+    let currentChar = 0;
+    const typingSpeed = window.innerWidth < 768 ? 50 : 30;
+    
+    const typingTimer = setInterval(function() {
+      if (currentChar < fullText.length) {
+        textSpan.textContent += fullText.charAt(currentChar);
+        currentChar++;
+      } else {
+        clearInterval(typingTimer);
+        element.classList.remove('typing');
+        element.classList.add('typed');
+        typewriterActive = false;
+      }
+    }, typingSpeed);
+  }
+
+  function updateCurrentSection(sectionId) {
+    progressDots.forEach(function(dot) {
+      dot.classList.remove('current');
+    });
+    
+    progressDots.forEach(function(dot) {
+      if (dot.getAttribute('data-section') === sectionId) {
+        dot.classList.add('current');
+      }
+    });
+    
+    const sectionArray = Array.from(sections);
+    currentSectionIndex = sectionArray.findIndex(function(section) {
+      return section.id === sectionId;
+    });
+  }
+
+  progressDots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      const targetSectionId = dot.getAttribute('data-section');
+      const targetSection = document.getElementById(targetSectionId);
+      
+      if (targetSection) {
+        targetSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }
+    });
+  });
+
+  // Keyboard navigation (desktop only)
+  document.addEventListener('keydown', function(event) {
+    if (window.innerWidth > 768) {
+      if (event.key === 'ArrowDown' || event.key === 'PageDown') {
+        goToNextSection();
+        event.preventDefault();
+      }
+      
+      if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+        goToPreviousSection();
+        event.preventDefault();
+      }
+    }
+  });
+
+  function goToNextSection() {
+    if (currentSectionIndex < sections.length - 1) {
+      currentSectionIndex++;
+      sections[currentSectionIndex].scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  }
+
+  function goToPreviousSection() {
+    if (currentSectionIndex > 0) {
+      currentSectionIndex--;
+      sections[currentSectionIndex].scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  }
+
+  // Enhanced mobile swipe
+  let touchStartY = 0;
+  let touchEndY = 0;
+  let touchStartTime = 0;
+  
+  document.addEventListener('touchstart', function(event) {
+    touchStartY = event.changedTouches[0].screenY;
+    touchStartTime = Date.now();
+  }, { passive: true });
+  
+  document.addEventListener('touchend', function(event) {
+    touchEndY = event.changedTouches[0].screenY;
+    handleSwipe();
+  }, { passive: true });
+  
+  function handleSwipe() {
+    const swipeDistance = touchStartY - touchEndY;
+    const swipeTime = Date.now() - touchStartTime;
+    const minimumSwipeDistance = 30;
+    const maximumSwipeTime = 500;
+    
+    if (Math.abs(swipeDistance) > minimumSwipeDistance && swipeTime < maximumSwipeTime) {
+      if (swipeDistance > 0) {
+        goToNextSection();
+      } else {
+        goToPreviousSection();
+      }
+    }
+  }
+
+  function updateCurrentSectionOnScroll() {
+    const windowCenter = window.innerHeight / 2;
+    let closestSection = 0;
+    let closestDistance = Infinity;
+    
+    sections.forEach(function(section, index) {
+      const rect = section.getBoundingClientRect();
+      const sectionCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(sectionCenter - windowCenter);
+      
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestSection = index;
+      }
+    });
+    
+    currentSectionIndex = closestSection;
+    updateCurrentSection(sections[currentSectionIndex].id);
+  }
+
+  let scrollTimeout;
+  window.addEventListener('scroll', function() {
+    if (scrollTimeout) return;
+    scrollTimeout = setTimeout(function() {
+      updateCurrentSectionOnScroll();
+      scrollTimeout = null;
+    }, 100);
+  }, { passive: true });
+
+  // Initial setup
+  setTimeout(function() {
+    updateCurrentSectionOnScroll();
+    
+    // Initialize visible sections
+    sections.forEach(function(section) {
+      const rect = section.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.7) {
+        const card = section.querySelector('[data-animate]');
+        if (card) {
+          card.classList.add('visible');
+        }
+      }
+    });
+  }, 200);
+
+  // Handle orientation changes
+  window.addEventListener('orientationchange', function() {
+    setTimeout(function() {
+      updateCurrentSectionOnScroll();
+    }, 500);
+  });
+
+});
+</script>
+</body>
+</html>

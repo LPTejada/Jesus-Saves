@@ -7,275 +7,139 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-font-family: "Comic Sans MS", cursive, sans-serif;
-background: linear-gradient(135deg, #87CEEB 0%, #98FB98 50%, #FFB6C1 100%);
-background-attachment: fixed;
+font-family: "Comic Sans MS", sans-serif;
+background-color: #f8f9fa;
 display: flex;
 justify-content: center;
 align-items: center;
 min-height: 100vh;
-overflow: hidden;
-position: relative;
 padding: 10px;
+overflow: auto;
 }
-
-/* Floating clouds animation */
-body::before {
-content: '';
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background-image: 
-  radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 10px, transparent 11px),
-  radial-gradient(circle at 80% 40%, rgba(255,255,255,0.2) 15px, transparent 16px),
-  radial-gradient(circle at 40% 80%, rgba(255,255,255,0.25) 12px, transparent 13px);
-animation: float 20s infinite linear;
-pointer-events: none;
-}
-
-@keyframes float {
-0% { transform: translateX(-100px); }
-100% { transform: translateX(100vw); }
-}
-
 .container {
 width: 100%;
-max-width: 850px;
-height: 550px;
+max-width: 800px;
+height: 500px;
 background: white;
-border-radius: 25px;
-box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+border-radius: 20px;
+box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 overflow: hidden;
 position: relative;
-border: 5px solid #FFD700;
-display: flex;
-flex-direction: column;
 }
-
 .slide {
 position: absolute;
 top: 0; left: 100%;
 width: 100%;
-height: calc(100% - 80px); /* Leave space for controls */
-padding: 30px;
+height: 100%;
+padding: 40px 40px 60px 40px;
 display: flex;
 flex-direction: column;
-justify-content: flex-start;
+justify-content: center;
 align-items: center;
-transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+transition: left 0.7s ease-in-out;
 text-align: center;
-background: linear-gradient(45deg, #f8f9ff 0%, #fff5f8 100%);
-overflow: auto;
 }
-
 .active { left: 0; }
-
 .slide h1 {
-font-size: 2.2rem;
-margin-bottom: 25px;
-color: #2E8B57;
-text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+font-size: 2rem;
+margin-bottom: 20px;
+color: #333;
 }
-
 .slide p {
-font-size: 1.3rem;
-margin-bottom: 25px;
-max-width: 550px;
-color: #444;
-line-height: 1.6;
+font-size: 1.2rem;
+margin-bottom: 20px;
+max-width: 500px;
 }
-
 .slide img {
 width: 100%;
 height: 100%;
 object-fit: contain;
-border-radius: 15px;
-box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+margin-top: -20px;
 }
-
 .controls {
 position: absolute;
-bottom: 0;
-width: 100%;
-height: 80px;
+bottom: 20px;
+left: 50%;
+transform: translateX(-50%);
 display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 0 25px;
-background: rgba(255, 255, 255, 0.95);
-border-top: 2px solid #FFD700;
+gap: 15px;
+z-index: 100;
 }
-
 button {
 padding: 12px 20px;
-font-size: 1.1rem;
-font-weight: bold;
+font-size: 1rem;
 border: none;
-border-radius: 25px;
-background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+border-radius: 10px;
+background: #ff6f61;
 color: white;
 cursor: pointer;
-transition: all 0.3s ease;
-box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-font-family: "Comic Sans MS", cursive;
-min-width: 100px;
+transition: background 0.3s;
+min-width: 80px;
+font-weight: bold;
 }
-
 button:hover {
-transform: translateY(-3px) scale(1.05);
-box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+background: #ff3b2f;
 }
-
 button:active {
-transform: translateY(-1px) scale(1.02);
+transform: scale(0.95);
 }
-
 .close-btn {
 position: absolute;
 top: 15px;
 left: 20px;
-font-size: 24px;
+font-size: 32px;
 font-weight: bold;
-color: #FF6B6B;
+color: rgb(38, 22, 22);
 text-decoration: none;
-padding: 6px 12px;
-transition: all 0.3s ease;
+padding: 5px 12px;
+transition: background-color 0.3s;
 z-index: 1000;
-border-radius: 50%;
-background: rgba(255,255,255,0.9);
-box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
-
 .close-btn:hover {
-color: white;
-background: #FF6B6B;
-transform: scale(1.1);
+color: #ff4d4d;
 }
 
-/* Progress indicator */
-.progress-container {
-position: absolute;
-top: 20px;
-right: 25px;
-display: flex;
-gap: 6px;
-z-index: 100;
-}
-
-.progress-dot {
-width: 10px;
-height: 10px;
-border-radius: 50%;
-background: rgba(255,255,255,0.5);
-transition: all 0.3s ease;
-border: 2px solid #FFD700;
-}
-
-.progress-dot.active {
-background: #FFD700;
-transform: scale(1.2);
-}
-
-/* Fun decorative elements */
-.slide::before {
-content: '✨';
-position: absolute;
-top: 15px;
-right: 15px;
-font-size: 20px;
-animation: twinkle 2s infinite alternate;
-}
-
-.slide:nth-child(even)::before {
-content: '🌟';
-top: 15px;
-left: 15px;
-right: auto;
-}
-
-@keyframes twinkle {
-0% { opacity: 0.3; transform: scale(0.8); }
-100% { opacity: 1; transform: scale(1.2); }
-}
-
-/* Slide-specific decorations */
-.slide:nth-child(1) { background: linear-gradient(45deg, #e8f5e8 0%, #f0f8ff 100%); }
-.slide:nth-child(2) { background: linear-gradient(45deg, #fff0f0 0%, #ffe8e8 100%); }
-.slide:nth-child(3) { background: linear-gradient(45deg, #f0f0f8 0%, #e8e8ff 100%); }
-.slide:nth-child(4) { background: linear-gradient(45deg, #fff8e8 0%, #ffeaa7 100%); }
-.slide:nth-child(5) { background: linear-gradient(45deg, #e8fff8 0%, #c8f7c5 100%); }
-.slide:nth-child(6) { background: linear-gradient(45deg, #f8e8ff 0%, #e8c5f7 100%); }
-.slide:nth-child(7) { background: linear-gradient(45deg, #fff8f0 0%, #ffe4b5 100%); }
-
-/* Mobile Responsive Styles */
+/* Mobile Styles */
 @media (max-width: 768px) {
 body {
 padding: 5px;
 min-height: 100vh;
 }
-
 .container {
 height: 80vh;
 min-height: 400px;
 max-height: 600px;
 border-radius: 15px;
-border: 3px solid #FFD700;
 }
-
 .slide {
-padding: 20px 20px 100px 20px;
+padding: 20px 20px 90px 20px;
 }
-
 .slide h1 {
 font-size: 1.5rem;
 margin-bottom: 15px;
 }
-
 .slide p {
 font-size: 1rem;
 margin-bottom: 15px;
 }
-
 .slide img {
 margin-top: -10px;
 }
-
 .controls {
 bottom: 15px;
 gap: 10px;
 }
-
 button {
 padding: 14px 18px;
 font-size: 0.9rem;
 min-width: 70px;
 border-radius: 25px;
 }
-
 .close-btn {
 top: 10px;
 left: 15px;
-font-size: 20px;
-padding: 5px 10px;
-}
-
-.progress-container {
-top: 15px;
-right: 20px;
-gap: 4px;
-}
-
-.progress-dot {
-width: 8px;
-height: 8px;
-border: 1px solid #FFD700;
-}
-
-.slide::before {
-font-size: 16px;
-top: 10px;
+font-size: 28px;
+padding: 3px 10px;
 }
 }
 
@@ -285,51 +149,35 @@ height: 75vh;
 min-height: 350px;
 border-radius: 10px;
 }
-
 .slide {
-padding: 15px 15px 110px 15px;
+padding: 15px 15px 100px 15px;
 }
-
 .slide h1 {
 font-size: 1.3rem;
 margin-bottom: 10px;
 }
-
 .slide p {
 font-size: 0.9rem;
 margin-bottom: 10px;
 }
-
 .slide img {
 margin-top: -5px;
 }
-
 .controls {
 bottom: 12px;
 gap: 8px;
 }
-
 button {
 padding: 16px 16px;
 font-size: 0.8rem;
 min-width: 60px;
 border-radius: 20px;
 }
-
 .close-btn {
 top: 8px;
 left: 12px;
-font-size: 18px;
+font-size: 24px;
 padding: 2px 8px;
-}
-
-.progress-container {
-gap: 3px;
-}
-
-.progress-dot {
-width: 6px;
-height: 6px;
 }
 }
 
@@ -338,129 +186,96 @@ height: 6px;
 .container {
 height: 90vh;
 }
-
 .slide {
 padding-bottom: 70px;
 }
-
 .controls {
 bottom: 10px;
-}
-
-.close-btn {
-top: 5px;
-left: 10px;
-}
-
-.progress-container {
-top: 10px;
-right: 15px;
 }
 }
 </style>
 </head>
 <body>
-<a href="kids.html" class="close-btn">×</a>
-
-<div class="progress-container">
-<div class="progress-dot active"></div>
-<div class="progress-dot"></div>
-<div class="progress-dot"></div>
-<div class="progress-dot"></div>
-<div class="progress-dot"></div>
-<div class="progress-dot"></div>
-<div class="progress-dot"></div>
-<div class="progress-dot"></div>
-<div class="progress-dot"></div>
-<div class="progress-dot"></div>
-<div class="progress-dot"></div>
-<div class="progress-dot"></div>
-<div class="progress-dot"></div>
-</div>
-
+<a href="teens.html" class="close-btn">×</a>
 <div class="container">
 <div class="slide active">
-<img src="img/save/16.jpg" alt="Bible">
+<img src="img/save/36.jpg" alt="Bible">
 </div>
 <div class="slide">
-<img src="img/save/17.jpg" alt="Sin">
+<img src="img/save/37.jpg" alt="Sin">
 </div>
 <div class="slide">
-<img src="img/save/18.jpg" alt="Death">
+<img src="img/save/38.jpg" alt="Death">
 </div>
 <div class="slide">
-<img src="img/save/19.jpg" alt="Cross">
+<img src="img/save/39.jpg" alt="Cross">
 </div>
 <div class="slide">
-<img src="img/save/20.jpg" alt="Faith">
+<img src="img/save/40.jpg" alt="Faith">
 </div>
 <div class="slide">
-<img src="img/save/21.jpg" alt="Gift">
+<img src="img/save/41.jpg" alt="Gift">
 </div>
 <div class="slide">
-<img src="img/save/22.jpg" alt="Heaven">
+<img src="img/save/42.jpg" alt="Heaven">
 </div>
 <div class="slide">
-<img src="img/save/23.jpg" alt="Heaven">
+<img src="img/save/43.jpg" alt="Heaven">
 </div>
 <div class="slide">
-<img src="img/save/24.jpg" alt="Heaven">
+<img src="img/save/44.jpg" alt="Heaven">
 </div>
 <div class="slide">
-<img src="img/save/25.jpg" alt="Heaven">
+<img src="img/save/45.jpg" alt="Heaven">
 </div>
 <div class="slide">
-<img src="img/save/26.jpg" alt="Heaven">
-</div>
-<div class="slide">
-<img src="img/save/27.jpg" alt="Heaven">
-</div>
-<div class="slide">
-<img src="img/save/28.jpg" alt="Heaven">
+<img src="img/save/46.jpg" alt="Heaven">
 </div>
 <div class="controls">
 <button id="prev">⬅ Back</button>
 <button id="next">Next ➡</button>
 </div>
 </div>
-
 <script>
 const slides = document.querySelectorAll('.slide');
-const progressDots = document.querySelectorAll('.progress-dot');
 let index = 0;
-
-function updateProgress() {
-progressDots.forEach((dot, i) => {
-dot.classList.toggle('active', i === index);
-});
-}
 
 document.getElementById('next').addEventListener('click', () => {
 slides[index].classList.remove('active');
 index = (index + 1) % slides.length;
 slides[index].classList.add('active');
-updateProgress();
 });
 
 document.getElementById('prev').addEventListener('click', () => {
 slides[index].classList.remove('active');
 index = (index - 1 + slides.length) % slides.length;
 slides[index].classList.add('active');
-updateProgress();
 });
 
-// Initialize progress
-updateProgress();
+// Add touch support for mobile swiping
+let startX = 0;
+let endX = 0;
 
-// Prevent zoom on double tap for better mobile experience
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function (event) {
-const now = (new Date()).getTime();
-if (now - lastTouchEnd <= 300) {
-event.preventDefault();
+document.addEventListener('touchstart', e => {
+startX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', e => {
+endX = e.changedTouches[0].screenX;
+handleSwipe();
+});
+
+function handleSwipe() {
+const threshold = 50;
+if (endX < startX - threshold) {
+// Swipe left - next slide
+document.getElementById('next').click();
 }
-lastTouchEnd = now;
-}, false);
+if (endX > startX + threshold) {
+// Swipe right - previous slide
+document.getElementById('prev').click();
+}
+}
 </script>
 </body>
 </html>
