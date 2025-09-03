@@ -27,7 +27,7 @@
     }
     .slide {
         position: absolute;
-        top: 0; left: 100%;
+        top: 50; left: 100%;
         width: 100%;
         height: 100%;
         padding: 40px;
@@ -53,6 +53,7 @@
         width: 100%;
     height: 100%;
     object-fit: contain;
+    margin-top: -20px;
     }
     .controls {
         position: absolute;
@@ -75,40 +76,76 @@
     button:hover {
         background: #ff3b2f;
     }
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  left: 20px; /* changed from right → left */
+  font-size: 32px;
+  font-weight: bold;
+  color: rgb(38, 22, 22);
+  text-decoration: none;
+  padding: 5px 12px;
+  transition: background-color 0.3s;
+  z-index: 1000; /* make sure it's always on top */
+}
+
+.close-btn:hover {
+  color: #ff4d4d; /* red tint when hovered */
+}
+
+
 </style>
 </head>
 <body>
 
+    <a href="teens.html" class="close-btn">x</a>
 <div class="container">
-    <div class="slide active">
-        <img src="img/save/29.png" alt="Bible">
-    </div>
-
-    <div class="slide">
-        <img src="img/save/30.png" alt="Sin">
-    </div>
-
-    <div class="slide">
-        <img src="img/save/31.png" alt="Death">
-    </div>
-
-    <div class="slide">
-        <img src="img/save/32.png" alt="Cross">
-    </div>
-
-    <div class="slide">
-        <img src="img/save/33.png" alt="Faith">
-    </div>
-
-    <div class="slide">
-        <img src="img/save/34.png" alt="Gift">
-    </div>
-
-    <div class="slide">
-        <img src="img/save/35.png" alt="Heaven">
-    </div>
-
     
+    <div class="slide active">
+        <img src="img/save/36.jpg" alt="Bible">
+    </div>
+
+    <div class="slide">
+        <img src="img/save/37.jpg" alt="Sin">
+        
+    </div>
+
+    <div class="slide">
+        <img src="img/save/38.jpg" alt="Death">
+    </div>
+
+    <div class="slide">
+        <img src="img/save/39.jpg" alt="Cross">
+    </div>
+
+    <div class="slide">
+        <img src="img/save/40.jpg" alt="Faith">
+    
+    </div>
+
+    <div class="slide">
+        <img src="img/save/41.jpg" alt="Gift">
+    </div>
+
+    <div class="slide">
+        <img src="img/save/42.jpg" alt="Heaven">
+    </div>
+
+     <div class="slide">
+        <img src="img/save/43.jpg" alt="Heaven">
+    </div>
+     <div class="slide">
+        <img src="img/save/44.jpg" alt="Heaven">
+    </div>
+     <div class="slide">
+        <img src="img/save/45.jpg" alt="Heaven">
+    </div>
+     <div class="slide">
+        <img src="img/save/46.jpg" alt="Heaven">
+    </div>
+
+    <div class="controls">
         <button id="prev">⬅ Back</button>
         <button id="next">Next ➡</button>
     </div>

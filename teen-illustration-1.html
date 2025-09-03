@@ -5,154 +5,261 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Romans Road to Salvation</title>
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-        font-family: "Comic Sans MS", cursive, sans-serif;
-        background-color: #f8f9fa;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        overflow: hidden;
-    }
-    .container {
-        width: 100%;
-        max-width: 800px;
-        height: 500px;
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        overflow: hidden;
-        position: relative;
-    }
-    .slide {
-        position: absolute;
-        top: 0; left: 100%;
-        width: 100%;
-        height: 100%;
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: left 0.7s ease-in-out;
-        text-align: center;
-    }
-    .active { left: 0; }
-    .slide h1 {
-        font-size: 2rem;
-        margin-bottom: 20px;
-        color: #333;
-    }
-    .slide p {
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-        max-width: 500px;
-    }
-    .slide img {
-        width: 100%;
-    height: 100%;
-    object-fit: contain;
-    }
-    .controls {
-        position: absolute;
-        bottom: 20px;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 40px;
-    }
-    button {
-        padding: 10px 20px;
-        font-size: 1rem;
-        border: none;
-        border-radius: 10px;
-        background: #ff6f61;
-        color: white;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-    button:hover {
-        background: #ff3b2f;
-    }
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+font-family: "Comic Sans MS", cursive, sans-serif;
+background-color: #f8f9fa;
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+padding: 10px;
+overflow: auto;
+}
+.container {
+width: 100%;
+max-width: 800px;
+height: 500px;
+background: white;
+border-radius: 20px;
+box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+overflow: hidden;
+position: relative;
+}
+.slide {
+position: absolute;
+top: 0; left: 100%;
+width: 100%;
+height: 100%;
+padding: 40px 40px 60px 40px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+transition: left 0.7s ease-in-out;
+text-align: center;
+}
+.active { left: 0; }
+.slide h1 {
+font-size: 2rem;
+margin-bottom: 20px;
+color: #333;
+}
+.slide p {
+font-size: 1.2rem;
+margin-bottom: 20px;
+max-width: 500px;
+}
+.slide img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+margin-top: -20px;
+}
+.controls {
+position: absolute;
+bottom: 20px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: 15px;
+z-index: 100;
+}
+button {
+padding: 12px 20px;
+font-size: 1rem;
+border: none;
+border-radius: 10px;
+background: #ff6f61;
+color: white;
+cursor: pointer;
+transition: background 0.3s;
+min-width: 80px;
+font-weight: bold;
+}
+button:hover {
+background: #ff3b2f;
+}
+button:active {
+transform: scale(0.95);
+}
 .close-btn {
-  position: absolute;
-  top: 15px;
-  left: 20px; /* changed from right → left */
-  font-size: 32px;
-  font-weight: bold;
-  color: rgb(38, 22, 22);
-  text-decoration: none;
-  padding: 5px 12px;
-  transition: background-color 0.3s;
-  z-index: 1000; /* make sure it's always on top */
+position: absolute;
+top: 15px;
+left: 20px;
+font-size: 32px;
+font-weight: bold;
+color: rgb(38, 22, 22);
+text-decoration: none;
+padding: 5px 12px;
+transition: background-color 0.3s;
+z-index: 1000;
 }
-
 .close-btn:hover {
-  color: #ff4d4d; /* red tint when hovered */
+color: #ff4d4d;
 }
 
+/* Mobile Styles */
+@media (max-width: 768px) {
+body {
+padding: 5px;
+min-height: 100vh;
+}
+.container {
+height: 80vh;
+min-height: 400px;
+max-height: 600px;
+border-radius: 15px;
+}
+.slide {
+padding: 20px 20px 90px 20px;
+padding-bottom: 80px; /* Extra space for buttons */
+}
+.slide h1 {
+font-size: 1.5rem;
+margin-bottom: 15px;
+}
+.slide p {
+font-size: 1rem;
+margin-bottom: 15px;
+}
+.controls {
+bottom: 15px;
+gap: 10px;
+}
+button {
+padding: 14px 18px;
+font-size: 0.9rem;
+min-width: 70px;
+border-radius: 25px;
+}
+.close-btn {
+top: 10px;
+left: 15px;
+font-size: 28px;
+padding: 3px 10px;
+}
+}
 
+@media (max-width: 480px) {
+.container {
+height: 75vh;
+min-height: 350px;
+border-radius: 10px;
+}
+.slide {
+padding: 15px 15px 100px 15px;
+padding-bottom: 90px;
+}
+.slide h1 {
+font-size: 1.3rem;
+margin-bottom: 10px;
+}
+.slide p {
+font-size: 0.9rem;
+margin-bottom: 10px;
+}
+.controls {
+bottom: 12px;
+gap: 8px;
+}
+button {
+padding: 16px 16px;
+font-size: 0.8rem;
+min-width: 60px;
+border-radius: 20px;
+}
+.close-btn {
+top: 8px;
+left: 12px;
+font-size: 24px;
+padding: 2px 8px;
+}
+}
+
+/* Ensure buttons are always visible */
+@media (max-height: 500px) {
+.container {
+height: 90vh;
+}
+.slide {
+padding-bottom: 70px;
+}
+.controls {
+bottom: 10px;
+}
+}
 </style>
 </head>
 <body>
-
-    <a href="teens.html" class="close-btn">x</a>
+<a href="teens.html" class="close-btn">×</a>
 <div class="container">
-    
-    <div class="slide active">
-        <img src="img/save/29.png" alt="Bible">
-    </div>
-
-    <div class="slide">
-        <img src="img/save/30.png" alt="Sin">
-        
-    </div>
-
-    <div class="slide">
-        <img src="img/save/31.png" alt="Death">
-    </div>
-
-    <div class="slide">
-        <img src="img/save/32.png" alt="Cross">
-    </div>
-
-    <div class="slide">
-        <img src="img/save/33.png" alt="Faith">
-    
-    </div>
-
-    <div class="slide">
-        <img src="img/save/34.png" alt="Gift">
-    </div>
-
-    <div class="slide">
-        <img src="img/save/35.png" alt="Heaven">
-    </div>
-
-    <div class="controls">
-        <button id="prev">⬅ Back</button>
-        <button id="next">Next ➡</button>
-    </div>
+<div class="slide active">
+<img src="img/save/29.jpg" alt="Bible">
 </div>
-
+<div class="slide">
+<img src="img/save/30.jpg" alt="Sin">
+</div>
+<div class="slide">
+<img src="img/save/31.jpg" alt="Death">
+</div>
+<div class="slide">
+<img src="img/save/32.jpg" alt="Cross">
+</div>
+<div class="slide">
+<img src="img/save/33.jpg" alt="Faith">
+</div>
+<div class="slide">
+<img src="img/save/34.jpg" alt="Gift">
+</div>
+<div class="slide">
+<img src="img/save/35.jpg" alt="Heaven">
+</div>
+<div class="controls">
+<button id="prev">⬅ Back</button>
+<button id="next">Next ➡</button>
+</div>
+</div>
 <script>
-    const slides = document.querySelectorAll('.slide');
-    let index = 0;
+const slides = document.querySelectorAll('.slide');
+let index = 0;
 
-    document.getElementById('next').addEventListener('click', () => {
-        slides[index].classList.remove('active');
-        index = (index + 1) % slides.length;
-        slides[index].classList.add('active');
-    });
+document.getElementById('next').addEventListener('click', () => {
+slides[index].classList.remove('active');
+index = (index + 1) % slides.length;
+slides[index].classList.add('active');
+});
 
-    document.getElementById('prev').addEventListener('click', () => {
-        slides[index].classList.remove('active');
-        index = (index - 1 + slides.length) % slides.length;
-        slides[index].classList.add('active');
-    });
+document.getElementById('prev').addEventListener('click', () => {
+slides[index].classList.remove('active');
+index = (index - 1 + slides.length) % slides.length;
+slides[index].classList.add('active');
+});
+
+// Add touch support for mobile swiping
+let startX = 0;
+let endX = 0;
+
+document.addEventListener('touchstart', e => {
+startX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', e => {
+endX = e.changedTouches[0].screenX;
+handleSwipe();
+});
+
+function handleSwipe() {
+const threshold = 50;
+if (endX < startX - threshold) {
+// Swipe left - next slide
+document.getElementById('next').click();
+}
+if (endX > startX + threshold) {
+// Swipe right - previous slide
+document.getElementById('prev').click();
+}
+}
 </script>
-
 </body>
 </html>
